@@ -35,11 +35,6 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     }
 
     @Override public Node visitVarDeclaration(CminusParser.VarDeclarationContext ctx) {
-        for (CminusParser.VarDeclIdContext v : ctx.varDeclId()) {
-            String id = v.ID().getText();
-            LOGGER.fine("Var ID: " + id);
-        }
-
         VarType type = getVarType(ctx.typeSpecifier());
         List<String> ids = new ArrayList<>();
         List<Integer> arraySizes = new ArrayList<>();
@@ -141,12 +136,6 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      */
     @Override public Node visitParamId(CminusParser.ParamIdContext ctx) {
         String id = ctx.ID().getText();
-        System.out.println("Starting here");
-        for (ParseTree p: ctx.children){
-            System.out.print(p+", ");
-            System.out.println(p.getClass().getName());
-        }
-
         boolean array = false;
         if (ctx.getChildCount() > 1) // TODO: I can't tell how to actually check if this is an array type from the context
             array = true;
