@@ -24,6 +24,6 @@ public class CompoundStmt implements Statement, Node{
             }
             builder.append("\n"+prefix+"}\n");
         }
-        else builder.append("{}\n");
+        else builder.append(prefix).append("{}\n");
     }
 }
