@@ -1,5 +1,6 @@
 package submit.ast;
 
+import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import java.util.ArrayList;
 
 public class FunDeclaration implements Declaration, Node {
@@ -25,11 +26,15 @@ public class FunDeclaration implements Declaration, Node {
             builder.append("void ");
         }
 
-        builder.append(id+ " (");
-        for (Param p: params) {
-            p.toCminus(builder, prefix);
+        builder.append(id+ "(");
+        if (params.size() != 0) {
+            params.get(0).toCminus(builder, prefix);
+            for (int i=1; i< params.size(); i++) {
+                builder.append(", ");
+                params.get(i).toCminus(builder, prefix);
+            }
         }
-        builder.append(")");
-        statement.toCminus(builder, prefix);
+        builder.append(") ");
+        statement.toCminus(builder, prefix+"\t");
     }
 }

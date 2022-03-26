@@ -10,7 +10,6 @@ public class ParamId implements Node {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix);
         builder.append(id);
         if (array) builder.append("[]");
     }

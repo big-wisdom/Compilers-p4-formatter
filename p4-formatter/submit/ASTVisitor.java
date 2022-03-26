@@ -140,10 +140,15 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitParamId(CminusParser.ParamIdContext ctx) {
-        String id = ctx.getText();
+        String id = ctx.ID().getText();
+        System.out.println("Starting here");
+        for (ParseTree p: ctx.children){
+            System.out.print(p+", ");
+            System.out.println(p.getClass().getName());
+        }
 
         boolean array = false;
-        if (ctx.getChildCount() != 0) // TODO: I can't tell how to actually check if this is an array type from the context
+        if (ctx.getChildCount() > 1) // TODO: I can't tell how to actually check if this is an array type from the context
             array = true;
         return new ParamId(id, array);
     }

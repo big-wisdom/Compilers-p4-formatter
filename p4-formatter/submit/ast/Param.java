@@ -11,8 +11,7 @@ public class Param implements Node {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix);
-        builder.append(type);
+        builder.append(type+ " ");
         paramId.toCminus(builder, prefix);
     }
 }
