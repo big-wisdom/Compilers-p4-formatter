@@ -449,11 +449,13 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitCall(CminusParser.CallContext ctx) {
+        String id = ctx.ID().getText();
+
         ArrayList<Expression> expressions = new ArrayList<>();
         for (CminusParser.ExpressionContext e: ctx.expression()) {
             expressions.add((Expression) visitExpression(e));
         }
-        return new Call(expressions);
+        return new Call(id, expressions);
     }
 
 }

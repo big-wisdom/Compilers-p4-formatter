@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class Call implements Node {
     String id;
     ArrayList<Expression> expressions;
-    public Call(ArrayList<Expression> expressions) {
+    public Call(String id, ArrayList<Expression> expressions) {
+        this.id = id;
         this.expressions = expressions;
     }
 
