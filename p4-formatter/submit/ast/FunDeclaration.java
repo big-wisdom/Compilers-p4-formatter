@@ -35,6 +35,6 @@ public class FunDeclaration implements Declaration, Node {
             }
         }
         builder.append(") ");
-        statement.toCminus(builder, prefix+"\t");
+        statement.toCminus(builder, prefix);
     }
 }

@@ -13,7 +13,7 @@ public class OrExpression implements Expression, Node{
     public void toCminus(StringBuilder builder, String prefix) {
         andExpressions.get(0).toCminus(builder, prefix);
         for (int i=1; i<andExpressions.size(); i++){
-            builder.append("||");
+            builder.append(" || ");
             andExpressions.get(i).toCminus(builder, prefix);
         }
     }

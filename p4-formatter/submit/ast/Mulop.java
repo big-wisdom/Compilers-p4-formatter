@@ -8,6 +8,6 @@ public class Mulop implements Node{
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(op);
+        builder.append(" "+op+" ");
     }
 }

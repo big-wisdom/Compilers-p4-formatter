@@ -182,11 +182,16 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitCompoundStmt(CminusParser.CompoundStmtContext ctx) {
+        ArrayList<Declaration> declarations = new ArrayList<>();
+        for (CminusParser.VarDeclarationContext d: ctx.varDeclaration()) {
+            declarations.add((VarDeclaration) visitVarDeclaration(d));
+        }
+
         ArrayList<Statement> statements = new ArrayList<>();
         for (CminusParser.StatementContext s: ctx.statement()) {
             statements.add((Statement) visitStatement(s));
         }
-        return new CompoundStmt(statements);
+        return new CompoundStmt(declarations, statements);
     }
     /**
      * {@inheritDoc}
@@ -418,7 +423,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitMutable(CminusParser.MutableContext ctx) {
-        String id = ctx.getText();
+        String id = ctx.ID().getText();
         Expression index = null;
         if (ctx.expression() != null)
             index = (Expression) visitExpression(ctx.expression());
