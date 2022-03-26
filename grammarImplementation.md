@@ -1,0 +1,55 @@
+* Param
+    * Type
+    * paramId
+        * ID
+* Statement
+    * expressionStmt
+        * Expression
+            * Mutable
+            * SimpleExpression
+                * orExpression
+                    * andExpression
+                        * unaryRelExpression
+                            * BANG
+                            * relExpression
+                                * sumExpression
+                                * termExpression
+                                    * mulop
+                                    * unaryExpression
+                                        * unaryOp
+                                        * factor
+                                            * immutable
+                                                * expression
+                                                * call
+                                                * constant
+                                            * mutable
+                                                * ID
+                                                * expression    
+                                * sumop
+    * compoundStmt
+    * ifStmt
+    * whileStmt
+    * returnStmt
+    * breakStmt
+
+## In order to do the first function statement
+* funDeclaration
+    * typeSpecifier
+    * Id
+    * Param
+    * statement
+        * compoundStmt
+            * statement
+                * expressionStmt
+                    * simpleExpression
+                        * orExpression
+                            * andExpression
+                                * unaryRelExpression
+                                    * relExpression
+                                        * sumExpression
+                                            * termExpression
+                                                * unaryExpression
+                                                    * factor
+                                                        * immutable
+                                                            * call
+            
