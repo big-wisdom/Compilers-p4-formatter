@@ -15,8 +15,9 @@ public class AssignmentExpression implements Node, Expression {
         builder.append(prefix);
 
         mutable.toCminus(builder, prefix);
-        builder.append(" "+ operator + " ");
+        builder.append(" "+ operator);
         if (expression != null) {
+            builder.append(" ");
             expression.toCminus(builder, prefix);
         }
     }

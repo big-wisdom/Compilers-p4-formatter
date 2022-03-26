@@ -14,7 +14,7 @@ public class CompoundStmt implements Statement, Node{
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
         if (declarations.size() != 0 || statements.size() != 0) {
-            builder.append("{\n");
+            builder.append("\n"+prefix+"{\n");
             for (Declaration d: declarations) {
                 d.toCminus(builder, prefix+'\t');
             }
@@ -22,7 +22,7 @@ public class CompoundStmt implements Statement, Node{
             for (Statement s: statements) {
                 s.toCminus(builder, prefix+'\t');
             }
-            builder.append("\n"+prefix+"}\n");
+            builder.append(prefix+"}\n");
         }
         else builder.append(prefix).append("{}\n");
     }

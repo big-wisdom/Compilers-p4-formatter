@@ -18,7 +18,7 @@ public class FunDeclaration implements Declaration, Node {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix);
+        builder.append("\n"+prefix);
 
         if (type != null) {
             builder.append(type+ " ");
