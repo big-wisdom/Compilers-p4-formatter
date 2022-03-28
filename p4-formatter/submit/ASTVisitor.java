@@ -199,6 +199,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 
         // return to parent scope
         symbolTable = symbolTable.getParent();
+        CompoundStmt compoundStmt = new CompoundStmt(declarations, statements);
         return new CompoundStmt(declarations, statements);
     }
     /**

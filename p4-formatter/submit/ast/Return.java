@@ -28,4 +28,8 @@ public class Return implements Statement {
     }
   }
 
+  @Override
+  public boolean isCompound() {
+    return false;
+  }
 }

@@ -6,4 +6,9 @@ public class BreakStatement implements Statement, Node {
         builder.append(prefix);
         builder.append("break;\n");
     }
+
+    @Override
+    public boolean isCompound() {
+        return false;
+    }
 }

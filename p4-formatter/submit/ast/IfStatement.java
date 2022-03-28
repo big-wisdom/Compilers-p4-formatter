@@ -17,10 +17,15 @@ public class IfStatement implements Node, Statement {
         builder.append("if (");
         simpleExpression.toCminus(builder, prefix);
         builder.append(")\n");
-        statements.get(0).toCminus(builder, prefix);
+        statements.get(0).toCminus(builder, statements.get(0).isCompound() ? prefix : prefix+" ");
         if (statements.size() > 1) {
             builder.append(prefix + "else\n");
-            statements.get(1).toCminus(builder, prefix);
+            statements.get(1).toCminus(builder, statements.get(1).isCompound() ? prefix : prefix+" ");
         }
+    }
+
+    @Override
+    public boolean isCompound() {
+        return false;
     }
 }

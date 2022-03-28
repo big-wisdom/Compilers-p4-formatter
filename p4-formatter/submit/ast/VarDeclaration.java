@@ -44,4 +44,8 @@ public class VarDeclaration implements Declaration, Node {
     builder.append(";\n");
   }
 
+  @Override
+  public boolean isCompound() {
+    return false;
+  }
 }

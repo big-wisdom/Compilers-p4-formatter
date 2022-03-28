@@ -16,6 +16,11 @@ public class WhileStatement implements Statement, Node {
         builder.append("while(" );
         simpleExpression.toCminus(builder, prefix+"\t");
         builder.append(")\n");
-        statement.toCminus(builder, prefix);
+        statement.toCminus(builder, statement.isCompound()? prefix: prefix+" ");
+    }
+
+    @Override
+    public boolean isCompound() {
+        return false;
     }
 }

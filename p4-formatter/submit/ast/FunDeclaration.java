@@ -37,4 +37,9 @@ public class FunDeclaration implements Declaration, Node {
         builder.append(")\n");
         statement.toCminus(builder, prefix);
     }
+
+    @Override
+    public boolean isCompound() {
+        return false;
+    }
 }

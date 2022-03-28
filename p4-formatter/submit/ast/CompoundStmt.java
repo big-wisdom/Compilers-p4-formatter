@@ -16,14 +16,19 @@ public class CompoundStmt implements Statement, Node{
         if (declarations.size() != 0 || statements.size() != 0) {
             builder.append(prefix+"{\n");
             for (Declaration d: declarations) {
-                d.toCminus(builder, prefix+'\t');
+                d.toCminus(builder, prefix+"  ");
             }
 
             for (Statement s: statements) {
-                s.toCminus(builder, prefix+'\t');
+                s.toCminus(builder, prefix+"  ");
             }
             builder.append(prefix+"}\n");
         }
         else builder.append(prefix).append("{\n"+prefix+"}\n");
+    }
+
+    @Override
+    public boolean isCompound() {
+        return true;
     }
 }

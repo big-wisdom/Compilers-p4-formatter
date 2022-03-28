@@ -13,4 +13,9 @@ public class ExpressionStatement implements Statement, Node {
         expression.toCminus(builder, prefix);
         builder.append(";\n");
     }
+
+    @Override
+    public boolean isCompound() {
+        return false;
+    }
 }
