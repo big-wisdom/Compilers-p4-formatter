@@ -98,7 +98,10 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     @Override public Node visitFunDeclaration(CminusParser.FunDeclarationContext ctx) {
 
         // I will need the return type
-        VarType type = getVarType(ctx.typeSpecifier());
+        VarType type = null;
+        if (ctx.typeSpecifier() != null)
+            type = getVarType(ctx.typeSpecifier());
+
         // ID
         String id = ctx.ID().getText();
 
@@ -233,13 +236,15 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         Statement statement = (Statement) visitStatement(ctx.statement());
         return new WhileStatement(simpleExpression, statement);
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitBreakStmt(CminusParser.BreakStmtContext ctx) { return visitChildren(ctx); }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Node visitBreakStmt(CminusParser.BreakStmtContext ctx) {
+        return new BreakStatement();
+    }
     /**
      * {@inheritDoc}
      *

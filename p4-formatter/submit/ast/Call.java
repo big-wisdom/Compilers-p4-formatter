@@ -15,10 +15,17 @@ public class Call implements Node {
         builder.append(prefix);
 
         // TODO: (expression ',')*
-        // also why expresion?
         builder.append(id);
         builder.append("(");
-        expressions.get(0).toCminus(builder, prefix);
+
+        if (expressions.size() > 0) {
+            expressions.get(0).toCminus(builder, prefix);
+            for (int i=1; i < expressions.size(); i++) {
+                builder.append(", ");
+                expressions.get(i).toCminus(builder, prefix);
+            }
+        }
+
         builder.append(")");
     }
 }
