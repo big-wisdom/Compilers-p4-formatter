@@ -222,13 +222,17 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         }
         return new IfStatement(simpleExpression, statements);
     }
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * <p>The default implementation returns the result of calling
-//     * {@link #visitChildren} on {@code ctx}.</p>
-//     */
-//    @Override public T visitWhileStmt(CminusParser.WhileStmtContext ctx) { return visitChildren(ctx); }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override public Node visitWhileStmt(CminusParser.WhileStmtContext ctx) {
+        SimpleExpression simpleExpression = (SimpleExpression) visitSimpleExpression(ctx.simpleExpression());
+        Statement statement = (Statement) visitStatement(ctx.statement());
+        return new WhileStatement(simpleExpression, statement);
+    }
 //    /**
 //     * {@inheritDoc}
 //     *

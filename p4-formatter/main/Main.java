@@ -41,7 +41,7 @@ public class Main {
         LOGGER = Logger.getLogger(Parser.class.getName());
 
         // TODO Update the filename as needed
-        final String filename = "p4-formatter\\data\\test0.c";
+        final String filename = "p4-formatter\\data\\test1.c";
 
         LOGGER.info("");
         LOGGER.info("Parsing " + filename + "\n");
