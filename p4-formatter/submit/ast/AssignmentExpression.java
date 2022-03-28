@@ -12,13 +12,13 @@ public class AssignmentExpression implements Node, Expression {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix);
-
         mutable.toCminus(builder, prefix);
-        builder.append(" "+ operator);
         if (expression != null) {
+            builder.append(" "+ operator);
             builder.append(" ");
             expression.toCminus(builder, prefix);
+        } else {
+            builder.append(operator);
         }
     }
 }

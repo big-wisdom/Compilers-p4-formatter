@@ -12,9 +12,6 @@ public class Call implements Node {
 
     @Override
     public void toCminus(StringBuilder builder, String prefix) {
-        builder.append(prefix);
-
-        // TODO: (expression ',')*
         builder.append(id);
         builder.append("(");
 

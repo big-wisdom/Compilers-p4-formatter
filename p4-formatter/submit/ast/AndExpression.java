@@ -13,7 +13,7 @@ public class AndExpression implements Expression, Node {
         // TODO: (unaryRelExpression '&&')*
         unaryRelExpressions.get(0).toCminus(builder, prefix);
         for (int i=1; i<unaryRelExpressions.size(); i++) {
-            builder.append("&&");
+            builder.append(" && ");
             unaryRelExpressions.get(i).toCminus(builder, prefix);
         }
     }

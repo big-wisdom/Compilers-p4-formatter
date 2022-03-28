@@ -16,10 +16,10 @@ public class IfStatement implements Node, Statement {
 
         builder.append("if (");
         simpleExpression.toCminus(builder, prefix);
-        builder.append(") ");
+        builder.append(")\n");
         statements.get(0).toCminus(builder, prefix);
         if (statements.size() > 1) {
-            builder.append("else");
+            builder.append(prefix + "else\n");
             statements.get(1).toCminus(builder, prefix);
         }
     }
