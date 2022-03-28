@@ -96,18 +96,24 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitFunDeclaration(CminusParser.FunDeclarationContext ctx) {
-        // TODO: I will probably need to create a new symbol table here for the nex context
+
         // I will need the return type
         VarType type = getVarType(ctx.typeSpecifier());
         // ID
         String id = ctx.ID().getText();
+
+        // create entry for this function then new table for this function
+        symbolTable.addSymbol(id, new SymbolInfo(id, type, true));
+        symbolTable = symbolTable.createChild();
+
         // list of params
         ArrayList<Param> params = new ArrayList<>();
         for (CminusParser.ParamContext p: ctx.param()) {
-            params.add((Param) visitParam(p));
+            params.add((Param) visitParam(p)); // entries for the new symbol table will be made here
         }
         // statement
         Statement statement = (Statement) visitStatement(ctx.statement());
+        symbolTable = symbolTable.getParent(); // return the scope before this declaration
         return new FunDeclaration(type, id, params, statement);
     }
 //    /**
@@ -125,6 +131,10 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      */
     @Override public Node visitParam(CminusParser.ParamContext ctx) {
         VarType type = getVarType(ctx.typeSpecifier());
+
+        // create new symbol table entry
+        symbolTable.addSymbol(ctx.paramId().ID().getText(), new SymbolInfo(ctx.paramId().ID().getText(), type, false));
+
         ParamId paramId = (ParamId) visitParamId(ctx.paramId());
         return new Param(type, paramId);
     }
@@ -171,6 +181,9 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitCompoundStmt(CminusParser.CompoundStmtContext ctx) {
+        // create a new scope
+        symbolTable = symbolTable.createChild();
+
         ArrayList<Declaration> declarations = new ArrayList<>();
         for (CminusParser.VarDeclarationContext d: ctx.varDeclaration()) {
             declarations.add((VarDeclaration) visitVarDeclaration(d));
@@ -180,6 +193,9 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         for (CminusParser.StatementContext s: ctx.statement()) {
             statements.add((Statement) visitStatement(s));
         }
+
+        // return to parent scope
+        symbolTable = symbolTable.getParent();
         return new CompoundStmt(declarations, statements);
     }
     /**
@@ -413,6 +429,12 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      */
     @Override public Node visitMutable(CminusParser.MutableContext ctx) {
         String id = ctx.ID().getText();
+
+        // check the symbol table for this mutable
+        if (symbolTable.find(id) == null) {
+            LOGGER.warning("Undefined symbol on line "+ ctx.getStart().getLine() + ": " + id);
+        }
+
         Expression index = null;
         if (ctx.expression() != null)
             index = (Expression) visitExpression(ctx.expression());
@@ -444,6 +466,12 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      */
     @Override public Node visitCall(CminusParser.CallContext ctx) {
         String id = ctx.ID().getText();
+
+        // check the current and parent scopes for a function with that name
+        SymbolInfo entry = symbolTable.find(id);
+        if (entry == null) {
+            LOGGER.warning("Undefined symbol on line "+ ctx.getStart().getLine() + ": " + id);
+        }
 
         ArrayList<Expression> expressions = new ArrayList<>();
         for (CminusParser.ExpressionContext e: ctx.expression()) {
