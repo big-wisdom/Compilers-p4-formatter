@@ -73,7 +73,6 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         return node;
     }
 
-    // TODO Uncomment and implement whatever methods make sense
     /**
      * {@inheritDoc}
      *
@@ -150,7 +149,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     @Override public Node visitParamId(CminusParser.ParamIdContext ctx) {
         String id = ctx.ID().getText();
         boolean array = false;
-        if (ctx.getChildCount() > 1) // TODO: I can't tell how to actually check if this is an array type from the context
+        if (ctx.getChildCount() > 1)
             array = true;
         return new ParamId(id, array);
     }
@@ -169,7 +168,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         else if (ctx.ifStmt() != null)
             node = visitIfStmt(ctx.ifStmt());
         else if (ctx.whileStmt() != null)
-            node = visitWhileStmt(ctx.whileStmt()); // TODO: implement the other types
+            node = visitWhileStmt(ctx.whileStmt());
         else if (ctx.returnStmt() != null)
             node = visitReturnStmt(ctx.returnStmt());
         else
@@ -404,8 +403,14 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitUnaryExpression(CminusParser.UnaryExpressionContext ctx) {
+        ArrayList<String> unaryOps = new ArrayList<>();
+        for (CminusParser.UnaryopContext u: ctx.unaryop()) {
+            unaryOps.add(u.getText());
+        }
+
         Factor factor = (Factor) visitFactor(ctx.factor());
-        return new UnaryExpression(factor);
+
+        return new UnaryExpression(unaryOps, factor);
     }
 //    /**
 //     * {@inheritDoc}

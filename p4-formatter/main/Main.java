@@ -26,8 +26,7 @@ public class Main {
         // Logging setup
         Level level = Level.INFO;
 
-        // TODO Enable trace-level code as needed. When true, LOGGER.fine() statements will be visible.
-        final boolean trace = true;
+        final boolean trace = false;
         if (trace) {
             level = Level.ALL;
         }
@@ -40,7 +39,6 @@ public class Main {
         }
         LOGGER = Logger.getLogger(Parser.class.getName());
 
-        // TODO Update the filename as needed
         final String filename = "p4-formatter\\data\\test1.c";
 
         LOGGER.info("");
@@ -53,14 +51,12 @@ public class Main {
         parser.setBuildParseTree(true);
         CminusParser.ProgramContext programCtx = parser.program();
 
-        // TODO Implement building of the parse tree
         LOGGER.info("");
         LOGGER.info("Building abstract syntax tree");
         LOGGER.info("");
         ASTVisitor v = new ASTVisitor(LOGGER);
         Node ast = v.visitProgram(programCtx);
 
-        // TODO Output formatted code
         LOGGER.info("");
         LOGGER.info("Formatted code:");
         LOGGER.info("");
