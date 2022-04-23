@@ -19,6 +19,7 @@ public class SymbolTable {
 
   public SymbolTable() {
     table = new HashMap<>();
+    table.put("println", new SymbolInfo("println", null, true));
     parent = null;
     children = new ArrayList<>();
   }
@@ -57,7 +58,10 @@ public class SymbolTable {
   }
 
   // TODO: method to compute the size of activation record
-  // TODO: get unique label method
+  int label = 0;
+  public String getUniqueLabel() {
+    return "datalabel" + label;
+  }
 
   public SymbolTable getParent() {
     return parent;

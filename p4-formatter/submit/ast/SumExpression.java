@@ -24,6 +24,11 @@ public class SumExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        for (TermExpression t: termExpressions)
+        {
+            // TODO: this will soon need to sum the values and return the result
+            return t.toMIPS(code, data, symbolTable, regAllocator);
+        }
         return MIPSResult.createVoidResult();
     }
 }

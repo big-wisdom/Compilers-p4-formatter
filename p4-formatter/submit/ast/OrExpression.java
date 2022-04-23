@@ -24,6 +24,10 @@ public class OrExpression implements Expression, Node{
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        for (AndExpression and: andExpressions) {
+            // TODO: I will need to combine MIPSResults
+            return and.toMIPS(code, data, symbolTable, regAllocator);
+        }
         return MIPSResult.createVoidResult();
     }
 }

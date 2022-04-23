@@ -25,6 +25,11 @@ public class Factor implements Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        if (immutable != null)
+            return immutable.toMIPS(code, data, symbolTable, regAllocator);
+        else
+            mutable.toMIPS(code, data, symbolTable, regAllocator);
+
         return MIPSResult.createVoidResult();
     }
 }

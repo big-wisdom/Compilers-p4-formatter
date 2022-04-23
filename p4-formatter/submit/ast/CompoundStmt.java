@@ -33,6 +33,14 @@ public class CompoundStmt implements Statement, Node{
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        for (Declaration d: declarations) {
+            d.toMIPS(code, data, symbolTable, regAllocator);
+        }
+
+        for (Statement s: statements) {
+            s.toMIPS(code, data, symbolTable, regAllocator);
+        }
+
         return MIPSResult.createVoidResult();
     }
 

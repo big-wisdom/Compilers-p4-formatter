@@ -22,6 +22,6 @@ public class UnaryExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-        return MIPSResult.createVoidResult();
+        return factor.toMIPS(code, data, symbolTable, regAllocator);
     }
 }

@@ -6,7 +6,7 @@
 .globl	main
 
 j main
-
+la $t0 datalabel0
 # All memory structures are placed after the
 # .data assembler directive
 .data

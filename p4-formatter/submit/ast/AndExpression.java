@@ -24,6 +24,11 @@ public class AndExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        for (UnaryRelExpression u : unaryRelExpressions)
+        {
+            // TODO: I will need to combine MIPSResults
+            return u.toMIPS(code, data, symbolTable, regAllocator);
+        }
         return MIPSResult.createVoidResult();
     }
 }

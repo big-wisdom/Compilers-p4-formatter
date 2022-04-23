@@ -39,6 +39,9 @@ public class Program implements Node {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    for (Declaration declaration: declarations) {
+      declaration.toMIPS(code, data, symbolTable, regAllocator);
+    }
     return MIPSResult.createVoidResult();
   }
 

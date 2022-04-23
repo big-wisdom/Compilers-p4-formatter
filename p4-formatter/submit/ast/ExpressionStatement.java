@@ -20,6 +20,7 @@ public class ExpressionStatement implements Statement, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        expression.toMIPS(code, data,symbolTable, regAllocator);
         return MIPSResult.createVoidResult();
     }
 

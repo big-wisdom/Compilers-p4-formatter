@@ -4,9 +4,12 @@
  */
 package submit.ast;
 
+import org.antlr.v4.runtime.Parser;
 import submit.MIPSResult;
 import submit.RegisterAllocator;
 import submit.SymbolTable;
+
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +29,7 @@ public class StringConstant implements Expression {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-    return MIPSResult.createVoidResult();
+    return MIPSResult.createAddressResult(symbolTable.getUniqueLabel(), VarType.CHAR);
   }
 
 }

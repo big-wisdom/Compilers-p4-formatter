@@ -26,6 +26,11 @@ public class TermExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        for (UnaryExpression u: unaryExpressions)
+        {
+            // TODO: this will soon need to multiply all the MIPSResults and return the result
+            return u.toMIPS(code, data, symbolTable, regAllocator);
+        }
         return MIPSResult.createVoidResult();
     }
 }

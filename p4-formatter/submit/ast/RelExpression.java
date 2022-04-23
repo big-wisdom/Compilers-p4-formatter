@@ -24,6 +24,11 @@ public class RelExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        for (SumExpression s: sumExpressions)
+        {
+            // TODO: this will need to aggregate the results and return a new MIPSResult
+            return s.toMIPS(code, data, symbolTable, regAllocator);
+        }
         return MIPSResult.createVoidResult();
     }
 }
