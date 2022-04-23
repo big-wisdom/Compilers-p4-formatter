@@ -2,6 +2,7 @@ package submit.ast;
 
 import submit.MIPSResult;
 import submit.RegisterAllocator;
+import submit.SymbolInfo;
 import submit.SymbolTable;
 
 import java.util.ArrayList;
@@ -33,6 +34,14 @@ public class CompoundStmt implements Statement, Node{
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        code.append("# TODO: Entering a new scope.\n");
+        code.append("# TODO?: Symbols in symbol table:\n");
+        for (String key: symbolTable.getKeys())
+        {
+            SymbolInfo symbol = symbolTable.find(key);
+            code.append("# " + symbol.toString() + "\n");
+        }
+
         for (Declaration d: declarations) {
             d.toMIPS(code, data, symbolTable, regAllocator);
         }
@@ -41,6 +50,7 @@ public class CompoundStmt implements Statement, Node{
             s.toMIPS(code, data, symbolTable, regAllocator);
         }
 
+        code.append("# TODO: Exiting scope.\n");
         return MIPSResult.createVoidResult();
     }
 

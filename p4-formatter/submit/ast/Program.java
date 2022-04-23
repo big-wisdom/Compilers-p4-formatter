@@ -39,9 +39,11 @@ public class Program implements Node {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    data.append("newline: .asciiz \"\\n\"\n"); // gotta do this somewhere
     for (Declaration declaration: declarations) {
       declaration.toMIPS(code, data, symbolTable, regAllocator);
     }
+    code.append("li $v0 10\n").append("syscall\n");
     return MIPSResult.createVoidResult();
   }
 

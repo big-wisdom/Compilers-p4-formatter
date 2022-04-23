@@ -29,7 +29,9 @@ public class StringConstant implements Expression {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-    return MIPSResult.createAddressResult(symbolTable.getUniqueLabel(), VarType.CHAR);
+    String label = symbolTable.getUniqueLabel();
+    data.append(label).append(": .asciiz " + value);
+    return MIPSResult.createAddressResult(label, VarType.CHAR);
   }
 
 }

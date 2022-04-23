@@ -67,4 +67,13 @@ public class SymbolTable {
     return parent;
   }
 
+  public ArrayList<String> getKeys()
+  {
+    ArrayList<String> keys = new ArrayList<>();
+    for (String s: table.keySet())
+    {
+      keys.add(s);
+    }
+    return keys;
+  }
 }
