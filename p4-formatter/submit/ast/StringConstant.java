@@ -4,6 +4,10 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -18,6 +22,11 @@ public class StringConstant implements Expression {
 
   public void toCminus(StringBuilder builder, final String prefix) {
     builder.append("\"").append(value).append("\"");
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    return MIPSResult.createVoidResult();
   }
 
 }

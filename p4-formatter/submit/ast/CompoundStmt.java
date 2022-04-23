@@ -1,5 +1,9 @@
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 import java.util.ArrayList;
 
 public class CompoundStmt implements Statement, Node{
@@ -25,6 +29,11 @@ public class CompoundStmt implements Statement, Node{
             builder.append(prefix+"}\n");
         }
         else builder.append(prefix).append("{\n"+prefix+"}\n");
+    }
+
+    @Override
+    public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        return MIPSResult.createVoidResult();
     }
 
     @Override

@@ -1,5 +1,9 @@
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 public class Immutable implements Node {
     Expression expression;
     Call call;
@@ -22,5 +26,10 @@ public class Immutable implements Node {
         } else {
             constant.toCminus(builder, prefix);
         }
+    }
+
+    @Override
+    public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        return MIPSResult.createVoidResult();
     }
 }

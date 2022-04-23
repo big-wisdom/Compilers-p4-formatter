@@ -1,5 +1,9 @@
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 import java.util.ArrayList;
 
 public class UnaryExpression implements Expression, Node {
@@ -14,5 +18,10 @@ public class UnaryExpression implements Expression, Node {
     public void toCminus(StringBuilder builder, String prefix) {
         for (String op: unaryOps) builder.append(op);
         factor.toCminus(builder, prefix);
+    }
+
+    @Override
+    public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        return MIPSResult.createVoidResult();
     }
 }

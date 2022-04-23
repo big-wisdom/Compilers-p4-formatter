@@ -1,5 +1,9 @@
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 public class AssignmentExpression implements Node, Expression {
     Mutable mutable;
     String operator;
@@ -20,5 +24,10 @@ public class AssignmentExpression implements Node, Expression {
         } else {
             builder.append(operator);
         }
+    }
+
+    @Override
+    public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        return MIPSResult.createVoidResult();
     }
 }

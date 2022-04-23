@@ -1,5 +1,9 @@
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 import java.util.ArrayList;
 
 public class SumExpression implements Expression, Node {
@@ -16,5 +20,10 @@ public class SumExpression implements Expression, Node {
             sumops.get(i-1).toCminus(builder, prefix);
             termExpressions.get(i).toCminus(builder, prefix);
         }
+    }
+
+    @Override
+    public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        return MIPSResult.createVoidResult();
     }
 }

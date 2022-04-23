@@ -1,5 +1,9 @@
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import java.util.ArrayList;
 
@@ -36,6 +40,11 @@ public class FunDeclaration implements Declaration, Node {
         }
         builder.append(")\n");
         statement.toCminus(builder, prefix);
+    }
+
+    @Override
+    public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        return MIPSResult.createVoidResult();
     }
 
     @Override

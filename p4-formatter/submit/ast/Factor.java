@@ -1,5 +1,9 @@
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 public class Factor implements Node {
     Immutable immutable;
     Mutable mutable;
@@ -17,5 +21,10 @@ public class Factor implements Node {
             immutable.toCminus(builder, prefix);
         else
             mutable.toCminus(builder, prefix);
+    }
+
+    @Override
+    public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        return MIPSResult.createVoidResult();
     }
 }

@@ -56,6 +56,9 @@ public class SymbolTable {
     return child;
   }
 
+  // TODO: method to compute the size of activation record
+  // TODO: get unique label method
+
   public SymbolTable getParent() {
     return parent;
   }
