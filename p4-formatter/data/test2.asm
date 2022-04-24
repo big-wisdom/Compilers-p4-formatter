@@ -28,6 +28,8 @@ la $a0 newline
 li $v0 4
 syscall
 li $t1 3
+li $t2 4
+add $t1 $t1 $t2
 # println
 move $a0 $t1
 li $v0 1
@@ -35,15 +37,7 @@ syscall
 la $a0 newline
 li $v0 4
 syscall
-li $t2 14
-# println
-move $a0 $t2
-li $v0 1
-syscall
-la $a0 newline
-li $v0 4
-syscall
-li $t3 7
+li $t3 14
 # println
 move $a0 $t3
 li $v0 1
@@ -52,6 +46,14 @@ la $a0 newline
 li $v0 4
 syscall
 li $t4 7
+# println
+move $a0 $t4
+li $v0 1
+syscall
+la $a0 newline
+li $v0 4
+syscall
+li $t5 7
 # println
 syscall
 la $a0 newline

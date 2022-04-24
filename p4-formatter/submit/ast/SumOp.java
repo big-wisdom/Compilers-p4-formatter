@@ -5,7 +5,7 @@ import submit.RegisterAllocator;
 import submit.SymbolTable;
 
 public class SumOp implements Node {
-    String op;
+    public String op;
     public SumOp(String op) {
         this.op = op;
     }

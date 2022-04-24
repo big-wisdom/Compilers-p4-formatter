@@ -21,40 +21,40 @@ li $v0 4
 syscall
 li $t0 7
 # println
-la $a0 null
-li $v0 4
+move $a0 $t0
+li $v0 1
 syscall
 la $a0 newline
 li $v0 4
 syscall
 li $t1 3
+li $t2 4
+add $t1 $t1 $t2
 # println
-la $a0 null
-li $v0 4
+move $a0 $t2
+li $v0 1
 syscall
 la $a0 newline
 li $v0 4
 syscall
-li $t2 14
+li $t3 14
 # println
-la $a0 null
-li $v0 4
-syscall
-la $a0 newline
-li $v0 4
-syscall
-li $t3 7
-# println
-la $a0 null
-li $v0 4
+move $a0 $t3
+li $v0 1
 syscall
 la $a0 newline
 li $v0 4
 syscall
 li $t4 7
 # println
-la $a0 null
+move $a0 $t4
+li $v0 1
+syscall
+la $a0 newline
 li $v0 4
+syscall
+li $t5 7
+# println
 syscall
 la $a0 newline
 li $v0 4
