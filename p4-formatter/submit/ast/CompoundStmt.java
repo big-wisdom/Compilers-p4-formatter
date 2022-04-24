@@ -41,6 +41,7 @@ public class CompoundStmt implements Statement, Node{
             SymbolInfo symbol = symbolTable.find(key);
             code.append("# " + symbol.toString() + "\n");
         }
+        code.append("# Update the stack pointer\n");
 
         for (Declaration d: declarations) {
             d.toMIPS(code, data, symbolTable, regAllocator);

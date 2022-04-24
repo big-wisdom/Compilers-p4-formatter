@@ -26,7 +26,9 @@ public class NumConstant implements Expression, Node {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-    return MIPSResult.createVoidResult();
+    String register = regAllocator.getT();
+    code.append(String.format("li %s %d\n", register, value));
+    return MIPSResult.createRegisterResult(register, VarType.INT);
   }
 
 }
