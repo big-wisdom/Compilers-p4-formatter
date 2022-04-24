@@ -28,8 +28,6 @@ public class Factor implements Node {
         if (immutable != null)
             return immutable.toMIPS(code, data, symbolTable, regAllocator);
         else
-            mutable.toMIPS(code, data, symbolTable, regAllocator);
-
-        return MIPSResult.createVoidResult();
+            return mutable.toMIPS(code, data, symbolTable, regAllocator);
     }
 }

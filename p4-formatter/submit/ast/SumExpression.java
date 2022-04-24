@@ -25,6 +25,7 @@ public class SumExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        // TODO: refactor to use less registers and clear them when I don't need them
         ArrayList<MIPSResult> results = new ArrayList<>();
         for (TermExpression t: termExpressions)
         {

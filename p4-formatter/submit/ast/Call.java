@@ -56,6 +56,7 @@ public class Call implements Node {
             {
                 code.append(String.format("move $a0 %s\n", value));
                 code.append("li $v0 1\n");
+                regAllocator.clearAll();
             }
             code.append("syscall\n");
             code.append("la $a0 newline\n");

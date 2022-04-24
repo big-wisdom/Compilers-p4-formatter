@@ -31,13 +31,11 @@ public class Immutable implements Node {
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
         if (expression != null) {
-            expression.toMIPS(code, data, symbolTable, regAllocator);
+             return expression.toMIPS(code, data, symbolTable, regAllocator);
         } else if (call != null) {
-            call.toMIPS(code, data, symbolTable, regAllocator);
+            return call.toMIPS(code, data, symbolTable, regAllocator);
         } else {
             return constant.toMIPS(code, data, symbolTable, regAllocator);
         }
-
-        return MIPSResult.createVoidResult();
     }
 }
