@@ -1,5 +1,7 @@
 package submit;
 
+import submit.ast.VarType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,16 +18,22 @@ public class SymbolTable {
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
   private final List<SymbolTable> children;
+  private int size = 0;
+  private int currentOffset = 0;
 
   public SymbolTable() {
     table = new HashMap<>();
-    table.put("println", new SymbolInfo("println", null, true));
+    table.put("println", new SymbolInfo("println", null, true, currentOffset));
     parent = null;
     children = new ArrayList<>();
   }
 
-  public void addSymbol(String id, SymbolInfo symbol) {
-    table.put(id, symbol);
+  // add symbol to the table and update offset and size data members
+  public void addSymbol(String id, VarType type, boolean function) {
+    int typeSize = type == null ? 0 : VarType.typeSize(type.toString());
+    currentOffset -= typeSize;
+    table.put(id, new SymbolInfo(id, type, function, currentOffset));
+    size += typeSize;
   }
 
   /**

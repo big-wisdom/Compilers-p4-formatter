@@ -6,6 +6,7 @@ package submit.ast;
 
 import submit.MIPSResult;
 import submit.RegisterAllocator;
+import submit.SymbolInfo;
 import submit.SymbolTable;
 
 /**
@@ -34,7 +35,16 @@ public class Mutable implements Expression, Node {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-    return MIPSResult.createVoidResult();
+    code.append(String.format("# Get %s's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later\n", id));
+
+    //////// store in a register
+    // get offset from symbol table
+    SymbolInfo info = symbolTable.find(id);
+    String reg = regAllocator.getT();
+    code.append(String.format("li %s %d\n", reg, info.offset));
+
+    // return a register MIPSResult
+    return MIPSResult.createRegisterResult(reg, info.type);
   }
 
 }

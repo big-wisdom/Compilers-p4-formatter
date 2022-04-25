@@ -4,6 +4,9 @@
  */
 package submit.ast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author edwajohn
@@ -25,6 +28,11 @@ public enum VarType {
       }
     }
     throw new RuntimeException("Illegal string in VarType.fromString()");
+  }
+
+  public static int typeSize(String s)
+  {
+    return 4; // TODO: What are their sizes?
   }
 
   @Override

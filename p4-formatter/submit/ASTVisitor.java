@@ -45,7 +45,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         for (CminusParser.VarDeclIdContext v : ctx.varDeclId()) {
             String id = v.ID().getText();
             ids.add(id);
-            symbolTable.addSymbol(id, new SymbolInfo(id, type, false));
+            symbolTable.addSymbol(id, type, false );
             if (v.NUMCONST() != null) {
                 arraySizes.add(Integer.parseInt(v.NUMCONST().getText()));
             } else {
@@ -109,7 +109,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         String id = ctx.ID().getText();
 
         // create entry for this function then new table for this function
-        symbolTable.addSymbol(id, new SymbolInfo(id, type, true));
+        symbolTable.addSymbol(id, type, true);
         symbolTable = symbolTable.createChild();
 
         // list of params
@@ -139,7 +139,7 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         VarType type = getVarType(ctx.typeSpecifier());
 
         // create new symbol table entry
-        symbolTable.addSymbol(ctx.paramId().ID().getText(), new SymbolInfo(ctx.paramId().ID().getText(), type, false));
+        symbolTable.addSymbol(ctx.paramId().ID().getText(), type, false);
 
         ParamId paramId = (ParamId) visitParamId(ctx.paramId());
         return new Param(type, paramId);
@@ -188,7 +188,8 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      */
     @Override public Node visitCompoundStmt(CminusParser.CompoundStmtContext ctx) {
         // create a new scope
-        symbolTable = symbolTable.createChild();
+        SymbolTable newScope = symbolTable.createChild();
+        symbolTable = newScope;
 
         ArrayList<Declaration> declarations = new ArrayList<>();
         for (CminusParser.VarDeclarationContext d: ctx.varDeclaration()) {
@@ -202,8 +203,8 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
 
         // return to parent scope
         symbolTable = symbolTable.getParent();
-        CompoundStmt compoundStmt = new CompoundStmt(declarations, statements);
-        return new CompoundStmt(declarations, statements);
+        CompoundStmt compoundStmt = new CompoundStmt(declarations, statements, newScope);
+        return compoundStmt;
     }
     /**
      * {@inheritDoc}
