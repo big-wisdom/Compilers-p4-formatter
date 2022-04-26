@@ -15,7 +15,7 @@ import submit.SymbolTable;
  */
 public class Mutable implements Expression, Node {
 
-  private final String id;
+  public final String id;
   private final Expression index;
 
   public Mutable(String id, Expression index) {
@@ -42,6 +42,10 @@ public class Mutable implements Expression, Node {
     SymbolInfo info = symbolTable.find(id);
     String reg = regAllocator.getT();
     code.append(String.format("li %s %d\n", reg, info.offset));
+
+    // add stack pointer
+    code.append("# Add the stack pointer address to the offset.\n");
+    code.append(String.format("add %s %s $sp\n", reg, reg));
 
     // return a register MIPSResult
     return MIPSResult.createRegisterResult(reg, info.type);

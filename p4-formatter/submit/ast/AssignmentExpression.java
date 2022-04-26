@@ -32,10 +32,6 @@ public class AssignmentExpression implements Node, Expression {
         MIPSResult mutableResult = mutable.toMIPS(code, data, symbolTable, regAllocator);
         String mReg = mutableResult.getRegister();
 
-        // add stack pointer
-        code.append("# Add the stack pointer address to the offset.\n");
-        code.append(String.format("add %s %s $sp\n", mReg, mReg));
-
         // compute the right hand side
         code.append("# Compute rhs for assignment =\n");
         MIPSResult expResult = expression.toMIPS(code, data, symbolTable, regAllocator);

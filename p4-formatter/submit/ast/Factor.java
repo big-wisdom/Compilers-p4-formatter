@@ -28,6 +28,12 @@ public class Factor implements Node {
         if (immutable != null)
             return immutable.toMIPS(code, data, symbolTable, regAllocator);
         else
-            return mutable.toMIPS(code, data, symbolTable, regAllocator);
+        {
+            MIPSResult result = mutable.toMIPS(code, data, symbolTable, regAllocator);
+            code.append(String.format("# Load the value of %s\n", mutable.id));
+            String newRegister = regAllocator.getT();
+            code.append(String.format("lw %s 0(%s)\n", newRegister, result.getRegister()));
+            return MIPSResult.createRegisterResult(newRegister, result.getType());
+        }
     }
 }
