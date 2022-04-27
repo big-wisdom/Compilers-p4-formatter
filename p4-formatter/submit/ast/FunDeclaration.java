@@ -44,8 +44,12 @@ public class FunDeclaration implements Declaration, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-        code.append(id).append(":\n");
-        return statement.toMIPS(code, data, symbolTable, regAllocator);
+        code.append("\n# code for "+id+"\n").append(id).append(":\n");
+        MIPSResult result = statement.toMIPS(code, data, symbolTable, regAllocator);
+        if (!id.equals("main"))
+            code.append("jr $ra\n");
+        regAllocator.clearAll();
+        return result;
     }
 
     @Override
