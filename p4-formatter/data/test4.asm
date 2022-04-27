@@ -91,6 +91,7 @@ li $t0 0
 add $t0 $t0 $sp
 # Compute rhs for assignment =
 li $t1 2
+sub $t1 $zero $t1
 # complete assignment statement with store
 sw $t1 0($t0)
 # Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later

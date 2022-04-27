@@ -22,6 +22,14 @@ public class UnaryExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-        return factor.toMIPS(code, data, symbolTable, regAllocator);
+        MIPSResult factorReg = factor.toMIPS(code, data, symbolTable, regAllocator);
+        // TODO: implement * and ? operators
+        for (String op: unaryOps) {
+            if (op.equals("-"))
+            {
+                code.append(String.format("sub %s $zero %s\n", factorReg.getRegister(), factorReg.getRegister()));
+            }
+        }
+        return factorReg;
     }
 }
