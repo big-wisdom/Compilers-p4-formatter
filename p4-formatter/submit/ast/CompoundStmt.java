@@ -45,7 +45,14 @@ public class CompoundStmt implements Statement, Node{
             code.append("# " + symbol.toString() + "\n");
         }
         code.append("# Update the stack pointer\n");
-
+        // if this one has a parent, adjust stack pointer by its size to start this one
+        SymbolTable parentTable;
+        int parentSize;
+        if ((parentTable = this.symbolTable.getParent()) != null)
+            parentSize = parentTable.size;
+        else
+            parentSize = 0;
+        code.append(String.format("addi $sp $sp -%d\n", parentSize));
 
         for (Declaration d: declarations) {
             d.toMIPS(code, data, this.symbolTable, regAllocator);
@@ -56,6 +63,7 @@ public class CompoundStmt implements Statement, Node{
         }
 
         code.append("# TODO: Exiting scope.\n");
+        code.append(String.format("addi $sp $sp %d\n", parentSize));
         return MIPSResult.createVoidResult();
     }
 

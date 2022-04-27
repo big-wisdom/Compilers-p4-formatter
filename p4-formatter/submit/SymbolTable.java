@@ -53,6 +53,14 @@ public class SymbolTable {
     return null;
   }
 
+  public int findOffset(String id) {
+    if (table.containsKey(id)) {
+      return table.get(id).offset;
+    }
+    // I made this unsafe, not checking if parent is null. Here we're assuming valid code input
+    return parent.findOffset(id) + parent.size;
+  }
+
   /**
    * Returns the new child.
    *

@@ -41,7 +41,7 @@ public class Mutable implements Expression, Node {
     // get offset from symbol table
     SymbolInfo info = symbolTable.find(id);
     String reg = regAllocator.getT();
-    code.append(String.format("li %s %d\n", reg, info.offset));
+    code.append(String.format("li %s %d\n", reg, symbolTable.findOffset(id)));
 
     // add stack pointer
     code.append("# Add the stack pointer address to the offset.\n");
