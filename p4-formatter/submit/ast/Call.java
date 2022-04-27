@@ -72,11 +72,14 @@ public class Call implements Node {
             int spAdjust = regAllocator.saveT(code, symbolTable.size) + symbolTable.size;
 
             code.append("# Evaluate parameters and save to stack\n");
-            ArrayList<MIPSResult> expressionResults = new ArrayList<>();
+            //ArrayList<MIPSResult> expressionResults = new ArrayList<>();
+            int paramOffset = spAdjust;
             for (Expression exp: expressions)
             {
-                // TODO: add results to the stack
-                expressionResults.add(exp.toMIPS(code, data, symbolTable, regAllocator));
+                MIPSResult paramReg = exp.toMIPS(code, data, symbolTable, regAllocator);
+                paramOffset += 4;
+                code.append(String.format("sw %s -%d($sp)\n", paramReg.getRegister(), paramOffset));
+                regAllocator.clear(paramReg.getRegister());
             }
 
             code.append("# Update the stack pointer\n");

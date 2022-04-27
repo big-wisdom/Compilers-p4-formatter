@@ -6,6 +6,8 @@
 .globl	main
 
 j main
+
+# code for main
 main:
 # TODO: Entering a new scope.
 # TODO?: Symbols in symbol table:
@@ -51,6 +53,7 @@ add $t0 $t0 $sp
 li $t1 5
 # complete assignment statement with store
 sw $t1 0($t0)
+# println
 # Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later
 li $t0 -4
 # Add the stack pointer address to the offset.
@@ -58,13 +61,12 @@ add $t0 $t0 $sp
 # Load the value of a
 lw $t1 0($t0)
 # Get b's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later
-li $t2 0
+li $t0 0
 # Add the stack pointer address to the offset.
-add $t2 $t2 $sp
+add $t0 $t0 $sp
 # Load the value of b
-lw $t3 0($t2)
-add $t1 $t1 $t3
-# println
+lw $t2 0($t0)
+add $t1 $t1 $t2
 move $a0 $t1
 li $v0 1
 syscall
@@ -94,6 +96,7 @@ li $t1 2
 sub $t1 $zero $t1
 # complete assignment statement with store
 sw $t1 0($t0)
+# println
 # Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later
 li $t0 0
 # Add the stack pointer address to the offset.
@@ -101,13 +104,12 @@ add $t0 $t0 $sp
 # Load the value of a
 lw $t1 0($t0)
 # Get b's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later
-li $t2 -4
+li $t0 -4
 # Add the stack pointer address to the offset.
-add $t2 $t2 $sp
+add $t0 $t0 $sp
 # Load the value of b
-lw $t3 0($t2)
-add $t1 $t1 $t3
-# println
+lw $t2 0($t0)
+add $t1 $t1 $t2
 move $a0 $t1
 li $v0 1
 syscall
@@ -126,6 +128,7 @@ li $t1 4
 sw $t1 0($t0)
 # TODO: Exiting scope.
 addi $sp $sp 8
+# println
 # Get a's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later
 li $t0 -4
 # Add the stack pointer address to the offset.
@@ -133,13 +136,12 @@ add $t0 $t0 $sp
 # Load the value of a
 lw $t1 0($t0)
 # Get b's offset from $sp from the symbol table and initialize a's address with it. We'll add $sp later
-li $t2 -8
+li $t0 -8
 # Add the stack pointer address to the offset.
-add $t2 $t2 $sp
+add $t0 $t0 $sp
 # Load the value of b
-lw $t3 0($t2)
-add $t1 $t1 $t3
-# println
+lw $t2 0($t0)
+add $t1 $t1 $t2
 move $a0 $t1
 li $v0 1
 syscall
