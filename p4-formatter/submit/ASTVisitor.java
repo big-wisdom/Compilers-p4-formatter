@@ -1,5 +1,6 @@
 package submit;
 
+import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import parser.CminusBaseVisitor;
@@ -187,9 +188,12 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public Node visitCompoundStmt(CminusParser.CompoundStmtContext ctx) {
-        // create a new scope
-        SymbolTable newScope = symbolTable.createChild();
-        symbolTable = newScope;
+        // create a new scope if not the child of a funDeclaration
+        RuleContext parentContext = ctx.parent.getParent().getRuleContext();
+        boolean childOfFunctionDeclaration = parentContext instanceof CminusParser.FunDeclarationContext;
+        if (!childOfFunctionDeclaration)
+            symbolTable = symbolTable.createChild();
+        // otherwise just leave it how it is to inherit the table of the functionDeclaration
 
         ArrayList<Declaration> declarations = new ArrayList<>();
         for (CminusParser.VarDeclarationContext d: ctx.varDeclaration()) {
@@ -202,8 +206,9 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         }
 
         // return to parent scope
-        symbolTable = symbolTable.getParent();
-        CompoundStmt compoundStmt = new CompoundStmt(declarations, statements, newScope);
+        CompoundStmt compoundStmt = new CompoundStmt(declarations, statements, symbolTable);
+        if (!childOfFunctionDeclaration)
+            symbolTable = symbolTable.getParent();
         return compoundStmt;
     }
     /**

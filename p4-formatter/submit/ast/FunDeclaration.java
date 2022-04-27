@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class FunDeclaration implements Declaration, Node {
     VarType type;
     String id;
-    Statement statement; // TODO: implement statements
-    ArrayList<Param> params; // TODO: implement parameters
+    Statement statement;
+    ArrayList<Param> params;
 
     public FunDeclaration(VarType type, String id, ArrayList<Param> params, Statement statement) {
         this.type = type;

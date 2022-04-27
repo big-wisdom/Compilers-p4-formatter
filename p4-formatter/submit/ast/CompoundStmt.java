@@ -46,6 +46,7 @@ public class CompoundStmt implements Statement, Node{
         }
         code.append("# Update the stack pointer\n");
 
+
         for (Declaration d: declarations) {
             d.toMIPS(code, data, this.symbolTable, regAllocator);
         }

@@ -10,7 +10,6 @@ main:
 # TODO: Entering a new scope.
 # TODO?: Symbols in symbol table:
 # <println, null>
-# <main, null>
 # Update the stack pointer
 # println
 la $a0 datalabel0

@@ -18,8 +18,8 @@ public class SymbolTable {
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
   private final List<SymbolTable> children;
-  private int size = 0;
-  private int currentOffset = 0;
+  public int size = 0; // keeps track of the positive size of the table
+  private int currentOffset = 0; // keeps track of the (negative) offset of the furthest out variable
 
   public SymbolTable() {
     table = new HashMap<>();
