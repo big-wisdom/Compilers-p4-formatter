@@ -33,6 +33,8 @@ public class Factor implements Node {
             code.append(String.format("# Load the value of %s\n", mutable.id));
             String newRegister = regAllocator.getT();
             code.append(String.format("lw %s 0(%s)\n", newRegister, result.getRegister()));
+            // release the register of the offput
+            regAllocator.clear(result.getRegister());
             return MIPSResult.createRegisterResult(newRegister, result.getType());
         }
     }
