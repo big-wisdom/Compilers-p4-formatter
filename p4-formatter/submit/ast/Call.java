@@ -35,6 +35,8 @@ public class Call implements Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        int paramOffset = 0;
+
         if (Objects.equals(id, "println"))
         {
             code.append("# println\n");
@@ -73,7 +75,7 @@ public class Call implements Node {
 
             code.append("# Evaluate parameters and save to stack\n");
             //ArrayList<MIPSResult> expressionResults = new ArrayList<>();
-            int paramOffset = spAdjust;
+            paramOffset = spAdjust;
             for (Expression exp: expressions)
             {
                 MIPSResult paramReg = exp.toMIPS(code, data, symbolTable, regAllocator);
@@ -97,6 +99,18 @@ public class Call implements Node {
             code.append("# Restore $ra\n");
             code.append(String.format("move $ra %s\n", raReg));
         }
-        return MIPSResult.createVoidResult();
+
+        // possibly return a value in a register
+        if (symbolTable.find(id).type != null)
+        {
+            // load return value from stack
+            code.append("# Get return value off stack\n");
+            String reg = regAllocator.getT();
+            int offset = paramOffset + VarType.typeSize(symbolTable.find(id).type.toString());
+            code.append(String.format("lw %s %d($sp)\n", reg, -offset));
+            return MIPSResult.createRegisterResult(reg, symbolTable.find(id).type);
+        }
+        else
+            return MIPSResult.createVoidResult();
     }
 }

@@ -120,6 +120,10 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         }
         // statement
         Statement statement = (Statement) visitStatement(ctx.statement());
+
+        // add return symbol to the symbol table
+        symbolTable.addSymbol("return", type, false);
+
         symbolTable = symbolTable.getParent(); // return the scope before this declaration
         return new FunDeclaration(type, id, params, statement);
     }

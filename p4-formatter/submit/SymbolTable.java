@@ -30,10 +30,14 @@ public class SymbolTable {
 
   // add symbol to the table and update offset and size data members
   public void addSymbol(String id, VarType type, boolean function) {
-    int typeSize = type == null ? 0 : VarType.typeSize(type.toString());
-    currentOffset -= typeSize;
+    // if not function
+    if (!function || id.equals("return"))
+    {
+      int typeSize = type == null ? 0 : VarType.typeSize(type.toString());
+      currentOffset -= typeSize;
+      size += typeSize;
+    }
     table.put(id, new SymbolInfo(id, type, function, currentOffset));
-    size += typeSize;
   }
 
   /**

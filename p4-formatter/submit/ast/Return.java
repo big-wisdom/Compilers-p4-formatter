@@ -34,6 +34,12 @@ public class Return implements Statement {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    // add return symbol info to table
+    MIPSResult resultReg = expr.toMIPS(code, data, symbolTable, regAllocator);
+    // add return value to stack
+    code.append(String.format("sw %s %d($sp)\n", resultReg.getRegister(), symbolTable.currentOffset));
+    code.append("jr $ra\n");
+
     return MIPSResult.createVoidResult();
   }
 
