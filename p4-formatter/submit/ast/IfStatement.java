@@ -31,11 +31,18 @@ public class IfStatement implements Node, Statement {
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
         MIPSResult condition = simpleExpression.toMIPS(code, data, symbolTable, regAllocator);
-        code.append(String.format("subi %s %s 1\n", condition.getRegister(), condition.getRegister()));
-        String label = symbolTable.getUniqueLabel();
-        code.append(String.format("bne %s $zero %s\n", condition.getRegister(), label));
+
+        String labelFalse = SymbolTable.getUniqueLabel();
+        String labelTrue = SymbolTable.getUniqueLabel();
+        code.append(String.format("bne %s $zero %s\n", condition.getRegister(), labelFalse));
         MIPSResult s1 = statements.get(0).toMIPS(code, data, symbolTable, regAllocator);
-        // MIPSResult s2 = statements.get(1).toMIPS(code, data, symbolTable, regAllocator);
+
+        code.append(String.format("j %s\n", labelTrue));
+        code.append(String.format("%s:\n", labelFalse));
+        MIPSResult s2;
+        if (statements.size() > 1)
+            s2 = statements.get(1).toMIPS(code, data, symbolTable, regAllocator);
+        code.append(labelTrue+":\n");
         return MIPSResult.createVoidResult();
     }
 

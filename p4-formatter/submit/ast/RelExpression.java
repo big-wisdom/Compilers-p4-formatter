@@ -29,9 +29,29 @@ public class RelExpression implements Expression, Node {
         for (int i=1; i<sumExpressions.size(); i++)
         {
             currentReg = sumExpressions.get(i).toMIPS(code, data, symbolTable, regAllocator);
+            // all will return zero in the register if the condition is true;
             if (relops.get(i-1).op.equals("<"))
             {
                 code.append(String.format("slt %s %s %s\n", resultReg.getRegister(), resultReg.getRegister(), currentReg.getRegister()));
+                code.append(String.format("subi %s %s 1\n", resultReg.getRegister(), resultReg.getRegister()));
+            }
+            else if (relops.get(i-1).op.equals(">"))
+            {
+                // just switch the two from last time
+                code.append(String.format("slt %s %s %s\n", resultReg.getRegister(), currentReg.getRegister(), resultReg.getRegister()));
+                code.append(String.format("subi %s %s 1\n", resultReg.getRegister(), resultReg.getRegister()));
+            }
+            else if (relops.get(i-1).op.equals("<="))
+            {
+                code.append(String.format("slt %s %s %s\n", resultReg.getRegister(), currentReg.getRegister(), resultReg.getRegister()));
+            }
+            else if (relops.get(i-1).op.equals(">="))
+            {
+                code.append(String.format("slt %s %s %s\n", resultReg.getRegister(), resultReg.getRegister(), currentReg.getRegister()));
+            }
+            else if (relops.get(i-1).op.equals("=="))
+            {
+                code.append(String.format("sub %s %s %s\n", resultReg.getRegister(), resultReg.getRegister(), currentReg.getRegister()));
             }
             regAllocator.clear(currentReg.getRegister());
         }
