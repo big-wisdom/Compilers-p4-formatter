@@ -25,6 +25,18 @@ public class WhileStatement implements Statement, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        String trueLabel = SymbolTable.getUniqueLabel();
+        String falseLabel = SymbolTable.getUniqueLabel();
+        code.append(String.format("%s:\n", trueLabel));
+
+        MIPSResult condition = simpleExpression.toMIPS(code, data, symbolTable, regAllocator);
+        code.append(String.format("bne %s $zero %s\n", condition.getRegister(), falseLabel));
+
+        statement.toMIPS(code, data, symbolTable, regAllocator);
+
+        code.append(String.format("j %s\n", trueLabel));
+        code.append(String.format("%s:\n", falseLabel));
+
         return MIPSResult.createVoidResult();
     }
 
