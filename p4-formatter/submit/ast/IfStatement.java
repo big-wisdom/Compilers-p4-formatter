@@ -30,6 +30,12 @@ public class IfStatement implements Node, Statement {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+        MIPSResult condition = simpleExpression.toMIPS(code, data, symbolTable, regAllocator);
+        code.append(String.format("subi %s %s 1\n", condition.getRegister(), condition.getRegister()));
+        String label = symbolTable.getUniqueLabel();
+        code.append(String.format("bne %s $zero %s\n", condition.getRegister(), label));
+        MIPSResult s1 = statements.get(0).toMIPS(code, data, symbolTable, regAllocator);
+        // MIPSResult s2 = statements.get(1).toMIPS(code, data, symbolTable, regAllocator);
         return MIPSResult.createVoidResult();
     }
 

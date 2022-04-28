@@ -78,9 +78,9 @@ public class SymbolTable {
   }
 
   // TODO: method to compute the size of activation record
-  int label = 0;
-  public String getUniqueLabel() {
-    return "datalabel" + label;
+  static int label = 0;
+  public static String getUniqueLabel() {
+    return "datalabel" + label++;
   }
 
   public SymbolTable getParent() {

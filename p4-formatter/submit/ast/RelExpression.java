@@ -24,11 +24,17 @@ public class RelExpression implements Expression, Node {
 
     @Override
     public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-        for (SumExpression s: sumExpressions)
+        MIPSResult resultReg = sumExpressions.get(0).toMIPS(code, data, symbolTable, regAllocator);
+        MIPSResult currentReg;
+        for (int i=1; i<sumExpressions.size(); i++)
         {
-            // TODO: this will need to aggregate the results and return a new MIPSResult
-            return s.toMIPS(code, data, symbolTable, regAllocator);
+            currentReg = sumExpressions.get(i).toMIPS(code, data, symbolTable, regAllocator);
+            if (relops.get(i-1).op.equals("<"))
+            {
+                code.append(String.format("slt %s %s %s\n", resultReg.getRegister(), resultReg.getRegister(), currentReg.getRegister()));
+            }
+            regAllocator.clear(currentReg.getRegister());
         }
-        return MIPSResult.createVoidResult();
+        return resultReg;
     }
 }

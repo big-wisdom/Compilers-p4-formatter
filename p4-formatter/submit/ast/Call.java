@@ -62,6 +62,7 @@ public class Call implements Node {
             code.append("la $a0 newline\n");
             code.append("li $v0 4\n");
             code.append("syscall\n");
+
         } else
         {
             code.append(String.format("# Calling function %s\n", id));
